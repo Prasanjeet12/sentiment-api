@@ -11,6 +11,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class SentimentRequest(BaseModel):
     sentences: list[str]
 
@@ -30,6 +31,14 @@ def classify(text: str):
         return "sad"
 
     return "neutral"
+
+@app.get("/")
+async def home():
+    return {"message": "Sentiment API is running"}
+
+@app.get("/sentiment")
+async def sentiment_info():
+    return {"message": "Use POST /sentiment with JSON body"}
 
 @app.post("/sentiment")
 async def sentiment(data: SentimentRequest):
